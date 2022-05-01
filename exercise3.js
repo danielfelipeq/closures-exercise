@@ -1,6 +1,5 @@
 const createGame = () => {
   let randomNum = Math.floor(Math.random() * 100);
-  console.log(randomNum);
   return (numberSecret = (num) => {
     if (num > randomNum) {
       return "Muy Alto!";
@@ -11,7 +10,16 @@ const createGame = () => {
     }
   });
 };
+
 let guess = createGame();
-console.log(guess(88));
-console.log(guess(40));
-console.log(guess(6));
+let respuesta;
+
+process.stdout.write("Adivina el numero entre 1 y 100: ");
+
+process.stdin.on("data", (data) => {
+  respuesta = parseInt(data);
+  let response = guess(respuesta);
+  process.stdout.write(`${response}\n`);
+  if (response === "Lo adivinaste, Felicitaciones!") process.exit();
+  process.stdout.write(`Sigue intentando: `);
+});
